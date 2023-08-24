@@ -11,12 +11,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.fetchAll = exports.fetch = void 0;
 const pg_1 = require("pg");
-const pool = new pg_1.Pool({
-    user: "postgres",
-    password: "jasur001",
-    host: "localhost",
-    database: "ussd_servise_v2",
-});
+const config_1 = require("../config");
+const pool = new pg_1.Pool(config_1.dbConfig);
 function fetch(Sql, ...params) {
     return __awaiter(this, void 0, void 0, function* () {
         const cilent = yield pool.connect();

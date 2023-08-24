@@ -16,6 +16,7 @@ const fastify_1 = __importDefault(require("fastify"));
 const swagger_1 = __importDefault(require("@fastify/swagger"));
 const swagger_ui_1 = __importDefault(require("@fastify/swagger-ui"));
 const swagger_2 = require("./lib/swagger");
+const cors_1 = __importDefault(require("@fastify/cors"));
 const app = (0, fastify_1.default)({ logger: true });
 const port = process.env.PORT || 5050;
 const host = "RENDER" in process.env ? `0.0.0.0` : `localhost`;
@@ -23,6 +24,7 @@ const router_1 = __importDefault(require("./modules/start/router"));
 const router_2 = __importDefault(require("./modules/tariff/router"));
 app.register(swagger_1.default);
 app.register(swagger_ui_1.default, swagger_2.swaggerOption);
+app.register(cors_1.default);
 app.register(router_1.default);
 app.register(router_2.default);
 app.listen({ host: host, port: Number(port) }, (err, address) => __awaiter(void 0, void 0, void 0, function* () {

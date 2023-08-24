@@ -6,3 +6,6 @@ services:
     autoDeploy: false
     buildCommand: npm install
     startCommand: node dist/index.js
+     env:
+      - key: NODE_VERSION
+        value: 18.17.0

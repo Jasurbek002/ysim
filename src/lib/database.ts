@@ -1,11 +1,6 @@
 import { Pool } from "pg";
-
-const pool = new Pool({
-  user: "postgres",
-  password: "jasur001",
-  host: "localhost",
-  database: "ussd_servise_v2",
-});
+import { dbConfig } from "../config";
+const pool = new Pool(dbConfig);
 
 async function fetch(Sql: string, ...params: any) {
   const cilent = await pool.connect();
@@ -33,7 +28,4 @@ async function fetchAll(Sql: string, ...params: any) {
   }
 }
 
-export {
-  fetch,
-  fetchAll,
-};
+export { fetch, fetchAll };

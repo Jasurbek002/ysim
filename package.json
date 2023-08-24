@@ -15,6 +15,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@fastify/cors": "^8.3.0",
     "@fastify/send": "^2.1.0",
     "@fastify/swagger": "^8.8.0",
     "@fastify/swagger-ui": "^1.9.3",
@@ -22,7 +23,6 @@
     "@sinclair/typebox": "^0.30.4",
     "dotenv": "^16.3.1",
     "fastify": "^4.21.0",
-    "fastify-redis": "^4.3.3",
     "nodemon": "^3.0.1",
     "pg": "^8.11.3"
   },

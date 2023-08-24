@@ -2,6 +2,7 @@ import fastify, { FastifyInstance } from "fastify";
 import fastifySwagger from "@fastify/swagger";
 import fastifySwaggerUi from "@fastify/swagger-ui";
 import { swaggerOption } from "./lib/swagger";
+import cors from '@fastify/cors'
 
 const app: FastifyInstance = fastify({ logger: true });
 const port = process.env.PORT || 5050;
@@ -12,7 +13,7 @@ import tariffRouter from "./modules/tariff/router";
 
 app.register(fastifySwagger);
 app.register(fastifySwaggerUi, swaggerOption);
-
+app.register(cors)
 app.register(startRouter)
 app.register(tariffRouter)
 
