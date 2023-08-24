@@ -4,7 +4,7 @@ import fastifySwaggerUi from "@fastify/swagger-ui";
 import { swaggerOption } from "./lib/swagger";
 
 const app: FastifyInstance = fastify({ logger: true });
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5050;
 const host = "RENDER" in process.env ? `0.0.0.0` : `localhost`;
 
 import startRouter from "./modules/start/router";
