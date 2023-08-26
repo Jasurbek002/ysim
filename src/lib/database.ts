@@ -1,6 +1,7 @@
 import { Pool } from "pg";
 import { dbConfig } from "../config";
 const pool = new Pool(dbConfig);
+ 
 
 async function fetch(Sql: string, ...params: any) {
   const cilent = await pool.connect();

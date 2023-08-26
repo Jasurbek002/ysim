@@ -16,7 +16,8 @@ const model_1 = __importDefault(require("./model"));
 function GET_ALL_TARIFF_TYPE(req, rep) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const tariffTyping = yield model_1.default.GET_ALL_TARIFF_TYPE();
+            const tariffTyping = yield model_1.default.GET_ALL_TARIFF_TYPE_CATEGORY();
+            return tariffTyping;
         }
         catch (error) {
             return error;
@@ -27,7 +28,20 @@ function GET_ALL_TARIFFS(req, rep) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const tariffTyping = yield model_1.default.GET_ALL_TARIFFS();
-            return tariffTyping;
+            console.log(tariffTyping);
+            return JSON.parse(tariffTyping[0].get_all_category_tariff);
+        }
+        catch (error) {
+            return error;
+        }
+    });
+}
+function GET_ONE_TARIFF(req, rep) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const { tariffId } = req.params;
+            const oneTarif = yield model_1.default.GET_ONE_TARIFF(tariffId);
+            return oneTarif;
         }
         catch (error) {
             return error;
@@ -36,5 +50,6 @@ function GET_ALL_TARIFFS(req, rep) {
 }
 exports.default = {
     GET_ALL_TARIFF_TYPE,
-    GET_ALL_TARIFFS
+    GET_ALL_TARIFFS,
+    GET_ONE_TARIFF,
 };
