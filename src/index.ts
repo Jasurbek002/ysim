@@ -10,12 +10,15 @@ const host = "RENDER" in process.env ? `0.0.0.0` : `localhost`;
 
 import startRouter from "./modules/start/router";
 import tariffRouter from "./modules/tariff/router";
+import packageRouter from "./modules/package/router";
 
 app.register(fastifySwagger);
 app.register(fastifySwaggerUi, swaggerOption);
 app.register(cors)
-app.register(startRouter)
-app.register(tariffRouter)
+app.register(startRouter,{prefix:'api'})
+app.register(tariffRouter,{prefix:"api"})
+app.register(packageRouter,{prefix:"api"})
+
 
 
 

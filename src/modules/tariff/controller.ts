@@ -15,6 +15,21 @@ async function GET_ALL_TARIFF_TYPE(
   }
 }
 
+
+async function GET_ALL_TARIFFS(
+  req: FastifyRequestType,
+  rep: FastifyReplyType
+) {
+  try {
+    const tariffTyping = await model.GET_ALL_TARIFFS();
+    return tariffTyping
+  } catch (error) {
+    return error;
+  }
+}
+
+
 export default {
   GET_ALL_TARIFF_TYPE,
+  GET_ALL_TARIFFS
 };

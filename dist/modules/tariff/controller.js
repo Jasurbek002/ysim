@@ -23,6 +23,18 @@ function GET_ALL_TARIFF_TYPE(req, rep) {
         }
     });
 }
+function GET_ALL_TARIFFS(req, rep) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const tariffTyping = yield model_1.default.GET_ALL_TARIFFS();
+            return tariffTyping;
+        }
+        catch (error) {
+            return error;
+        }
+    });
+}
 exports.default = {
     GET_ALL_TARIFF_TYPE,
+    GET_ALL_TARIFFS
 };

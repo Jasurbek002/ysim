@@ -15,6 +15,18 @@ function GET_ALL_TARIFF_TYPE() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const data = yield (0, database_1.fetchAll)(query_1.GET_ALL_TARIFF_TYPEING);
+            return data;
+        }
+        catch (error) {
+            throw error;
+        }
+    });
+}
+function GET_ALL_TARIFFS() {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const data = yield (0, database_1.fetchAll)(query_1.GET_ALL_TARIFFS);
+            return data;
         }
         catch (error) {
             throw error;
@@ -22,5 +34,6 @@ function GET_ALL_TARIFF_TYPE() {
     });
 }
 exports.default = {
-    GET_ALL_TARIFF_TYPE
+    GET_ALL_TARIFF_TYPE,
+    GET_ALL_TARIFFS
 };
