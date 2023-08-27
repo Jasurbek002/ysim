@@ -15,7 +15,7 @@ import packageRouter from "./modules/package/router";
 app.register(fastifySwagger);
 app.register(fastifySwaggerUi, swaggerOption);
 app.register(cors)
-app.register(startRouter,{prefix:'api'})
+app.register(startRouter)
 app.register(tariffRouter,{prefix:"api"})
 app.register(packageRouter,{prefix:"api"})
 
