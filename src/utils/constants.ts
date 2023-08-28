@@ -1,1 +1,1 @@
-export const WEB_URL:string = "https://sim.coreteam.uz/"
+export const WEB_URL:string = "https://ussd-web-view-omega.vercel.app/"

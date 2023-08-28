@@ -17,7 +17,6 @@ const packageRouter = (router: FastifyInstance, option: any, done: any) => {
   router.get(REST.NET_NON_UCELL, controller.NET_NON_UCELL);
   router.get(REST.NET_NON_MOBIUZ, controller.NET_NON_MOBIUZ);
   
-
   // sms
   router.get(REST.SMS_BELEENE, controller.SMS_BELEENE);
   router.get(REST.SMS_UZTELECOM, controller.SMS_UZTELECOM);

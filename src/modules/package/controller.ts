@@ -3,6 +3,7 @@ import {
   FastifyRequestType,
 } from "fastify/types/type-provider";
 import model from "./model";
+
 // net
 async function NET_SIMPLE_UZTELECOM() {
   try {

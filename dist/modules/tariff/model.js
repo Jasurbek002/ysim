@@ -15,18 +15,21 @@ function GET_ALL_TARIFF_TYPE_CATEGORY() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const data = yield (0, database_1.fetchAll)(query_1.GET_ALL_TARIFF_TYPEING_QUERY);
-            return data;
+            return data[0];
         }
         catch (error) {
             throw error;
         }
     });
 }
-function GET_ALL_TARIFFS() {
+function GET_ALL_TARIFFS(typingId, company) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const data = yield (0, database_1.fetchAll)(query_1.GET_ALL_TARIFFS_QUERY);
-            return data;
+            const parserData = JSON.parse(data[0].get_all_category_tariff);
+            const sorted = parserData.filter((el) => el.tariff_typing_id === typingId &&
+                el.company_name.toLowerCase() === company);
+            return sorted;
         }
         catch (error) {
             throw error;
@@ -47,5 +50,5 @@ function GET_ONE_TARIFF(tariffId) {
 exports.default = {
     GET_ALL_TARIFF_TYPE_CATEGORY,
     GET_ALL_TARIFFS,
-    GET_ONE_TARIFF
+    GET_ONE_TARIFF,
 };
