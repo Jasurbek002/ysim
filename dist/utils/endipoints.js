@@ -4,7 +4,7 @@ exports.REST = void 0;
 // route
 exports.REST = {
     // global api
-    START: "/start",
+    START: "/",
     GET_ONE_TARIFF: "/tariff/:tariffId",
     GET_TARIFF_TYPEING_ID: "/tariff/:id",
     GET_ONE: "/package/:packageId",
