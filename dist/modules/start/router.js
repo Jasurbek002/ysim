@@ -7,6 +7,7 @@ const controller_1 = __importDefault(require("./controller"));
 const endipoints_1 = require("../../utils/endipoints");
 const startRouter = (router, option, done) => {
     router.get(endipoints_1.REST.START, controller_1.default.START);
+    router.get(endipoints_1.REST.OFFLINE, controller_1.default.OFFLINE);
     done();
 };
 exports.default = startRouter;

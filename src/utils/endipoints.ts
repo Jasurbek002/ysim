@@ -2,6 +2,7 @@
 export const REST = {
 // global api
   START: "/",
+  OFFLINE:"/offline",
   GET_ONE_TARIFF: "/tariff/:tariffId",
   GET_TARIFF_TYPEING_ID: "/tariff/:id",
   GET_ONE: "/package/:packageId",

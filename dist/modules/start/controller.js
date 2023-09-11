@@ -8,8 +8,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const constants_1 = require("../../utils/constants");
+const path_1 = __importDefault(require("path"));
+const fs_1 = __importDefault(require("fs"));
 function START() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -24,4 +29,24 @@ function START() {
         }
     });
 }
-exports.default = { START };
+function OFFLINE(req, rep) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const ussd = path_1.default.join(process.cwd(), 'uploads', 'dist.zip');
+            const stats = fs_1.default.statSync(ussd);
+            if (stats.size > 0) {
+                rep.sendFile(ussd);
+            }
+            else {
+                return {
+                    status: 404,
+                    message: "file not found"
+                };
+            }
+        }
+        catch (error) {
+            return error;
+        }
+    });
+}
+exports.default = { START, OFFLINE };
