@@ -19,7 +19,9 @@ function GET_ALL_TARIFF_TYPE_UCELL(req, rep) {
         try {
             const { get_all_tariff_typing } = yield model_1.default.GET_ALL_TARIFF_TYPE_CATEGORY();
             const companyTariff = get_all_tariff_typing === null || get_all_tariff_typing === void 0 ? void 0 : get_all_tariff_typing.filter((el) => el.category_id === 1);
-            return companyTariff;
+            if (companyTariff) {
+                return companyTariff;
+            }
         }
         catch (error) {
             return error;

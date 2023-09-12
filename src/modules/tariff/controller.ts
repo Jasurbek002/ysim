@@ -29,7 +29,9 @@ async function GET_ALL_TARIFF_TYPE_UCELL(
     const companyTariff = get_all_tariff_typing?.filter(
       (el: TariffType) => el.category_id === 1
     );
-    return companyTariff;
+    if(companyTariff){
+      return companyTariff;
+    }
   } catch (error) {
     return error;
   }
