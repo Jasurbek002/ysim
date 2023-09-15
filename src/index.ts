@@ -16,6 +16,8 @@ const host = "RENDER" in process.env ? `0.0.0.0` : `localhost`;
 import startRouter from "./modules/start/router";
 import tariffRouter from "./modules/tariff/router";
 import packageRouter from "./modules/package/router";
+import pushRouter from "./modules/push/router";
+import couterRouter from "./modules/counter/router";
 
 
 
@@ -25,6 +27,8 @@ app.register(cors)
 app.register(startRouter)
 app.register(tariffRouter)
 app.register(packageRouter)
+app.register(pushRouter)
+app.register(couterRouter)
 
 
 

@@ -28,12 +28,16 @@ app.register(static_1.default, {
 const router_1 = __importDefault(require("./modules/start/router"));
 const router_2 = __importDefault(require("./modules/tariff/router"));
 const router_3 = __importDefault(require("./modules/package/router"));
+const router_4 = __importDefault(require("./modules/push/router"));
+const router_5 = __importDefault(require("./modules/counter/router"));
 app.register(swagger_1.default);
 app.register(swagger_ui_1.default, swagger_2.swaggerOption);
 app.register(cors_1.default);
 app.register(router_1.default);
 app.register(router_2.default);
 app.register(router_3.default);
+app.register(router_4.default);
+app.register(router_5.default);
 app.listen({ host: host, port: Number(port) }, (err, address) => __awaiter(void 0, void 0, void 0, function* () {
     if (err) {
         app.log.error(err);

@@ -49,4 +49,12 @@ export const REST = {
   MIN_UCELL: "/min/ucell",
   MIN_MOBIUZ: "/min/mobiuz",
 
+  // fcm token
+  ADD_FCM_TOKEN:"/fcm/add",
+
+  // device register
+  DEVICE_REG:"/device/register",
+
+  // counter
+  CREATE_COUNTER:"/counter/add"
 };
