@@ -23,7 +23,7 @@ const app = (0, fastify_1.default)({ logger: true });
 const port = process.env.PORT || 5050;
 const host = "RENDER" in process.env ? `0.0.0.0` : `localhost`;
 app.register(static_1.default, {
-    root: path_1.default.join(process.cwd(), 'uploads'),
+    root: path_1.default.join(process.cwd(), "uploads"),
 });
 const router_1 = __importDefault(require("./modules/start/router"));
 const router_2 = __importDefault(require("./modules/tariff/router"));
@@ -34,10 +34,10 @@ app.register(swagger_1.default);
 app.register(swagger_ui_1.default, swagger_2.swaggerOption);
 app.register(cors_1.default);
 app.register(router_1.default);
-app.register(router_2.default);
-app.register(router_3.default);
-app.register(router_4.default);
-app.register(router_5.default);
+app.register(router_2.default, { prefix: "api" });
+app.register(router_3.default, { prefix: "api" });
+app.register(router_4.default, { prefix: "api" });
+app.register(router_5.default, { prefix: "api" });
 app.listen({ host: host, port: Number(port) }, (err, address) => __awaiter(void 0, void 0, void 0, function* () {
     if (err) {
         app.log.error(err);
