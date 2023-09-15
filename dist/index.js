@@ -34,10 +34,10 @@ app.register(swagger_1.default);
 app.register(swagger_ui_1.default, swagger_2.swaggerOption);
 app.register(cors_1.default);
 app.register(router_1.default);
-app.register(router_2.default, { prefix: "api" });
-app.register(router_3.default, { prefix: "api" });
-app.register(router_4.default, { prefix: "api" });
-app.register(router_5.default, { prefix: "api" });
+app.register(router_2.default, { prefix: "/v1" });
+app.register(router_3.default, { prefix: "/v1" });
+app.register(router_4.default, { prefix: "/v1" });
+app.register(router_5.default, { prefix: "/v1" });
 app.listen({ host: host, port: Number(port) }, (err, address) => __awaiter(void 0, void 0, void 0, function* () {
     if (err) {
         app.log.error(err);

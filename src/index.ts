@@ -23,10 +23,10 @@ app.register(fastifySwagger);
 app.register(fastifySwaggerUi, swaggerOption);
 app.register(cors);
 app.register(startRouter);
-app.register(tariffRouter, { prefix: "api" });
-app.register(packageRouter, { prefix: "api" });
-app.register(pushRouter, { prefix: "api" });
-app.register(couterRouter, { prefix: "api" });
+app.register(tariffRouter, { prefix: "/v1" });
+app.register(packageRouter, { prefix: "/v1" });
+app.register(pushRouter, { prefix: "/v1" });
+app.register(couterRouter, { prefix: "/v1" });
 
 app.listen(
   { host: host, port: Number(port) },
