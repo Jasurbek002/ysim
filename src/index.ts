@@ -19,14 +19,20 @@ import packageRouter from "./modules/package/router";
 import pushRouter from "./modules/push/router";
 import couterRouter from "./modules/counter/router";
 
+app.register(cors, {
+  origin: "*",
+  methods: "GET POST PUT DELETE PUTCH",
+  credentials: true,
+});
 app.register(fastifySwagger);
 app.register(fastifySwaggerUi, swaggerOption);
-app.register(cors);
+
 app.register(startRouter);
 app.register(tariffRouter, { prefix: "/v1" });
 app.register(packageRouter, { prefix: "/v1" });
 app.register(pushRouter, { prefix: "/v1" });
 app.register(couterRouter, { prefix: "/v1" });
+
 
 app.listen(
   { host: host, port: Number(port) },
