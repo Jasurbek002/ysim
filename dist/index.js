@@ -24,7 +24,7 @@ const port = process.env.PORT || 5050;
 const host = "RENDER" in process.env ? `0.0.0.0` : `localhost`;
 (() => __awaiter(void 0, void 0, void 0, function* () {
     yield app.register(cors_1.default, {
-        origin: "*",
+        origin: "http://127.0.0.1:5500",
         allowedHeaders: [
             "Origin",
             "X-Requested-With",

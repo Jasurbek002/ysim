@@ -12,7 +12,7 @@ const host = "RENDER" in process.env ? `0.0.0.0` : `localhost`;
 
 (async () => {
   await app.register(cors, {
-    origin: "*",
+    origin: "http://127.0.0.1:5500",
     allowedHeaders:[
      "Origin",
      "X-Requested-With",
