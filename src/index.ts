@@ -9,6 +9,14 @@ import cors from "@fastify/cors";
 const app: FastifyInstance = fastify({ logger: true });
 const port = process.env.PORT || 5050;
 const host = "RENDER" in process.env ? `0.0.0.0` : `localhost`;
+
+(async () => {
+  await app.register(cors, {
+    origin: "*",
+    methods: "GET, POST, PUT, DELETE, PATCH"
+  });
+})();
+
 app.register(fastifyStatic, {
   root: path.join(process.cwd(), "uploads"),
 });
@@ -19,11 +27,6 @@ import packageRouter from "./modules/package/router";
 import pushRouter from "./modules/push/router";
 import couterRouter from "./modules/counter/router";
 
-app.register(cors, {
-  origin: "*",
-  methods: "GET POST PUT DELETE PUTCH",
-  credentials: true,
-});
 app.register(fastifySwagger);
 app.register(fastifySwaggerUi, swaggerOption);
 
@@ -32,7 +35,6 @@ app.register(tariffRouter, { prefix: "/v1" });
 app.register(packageRouter, { prefix: "/v1" });
 app.register(pushRouter, { prefix: "/v1" });
 app.register(couterRouter, { prefix: "/v1" });
-
 
 app.listen(
   { host: host, port: Number(port) },

@@ -22,6 +22,12 @@ const cors_1 = __importDefault(require("@fastify/cors"));
 const app = (0, fastify_1.default)({ logger: true });
 const port = process.env.PORT || 5050;
 const host = "RENDER" in process.env ? `0.0.0.0` : `localhost`;
+(() => __awaiter(void 0, void 0, void 0, function* () {
+    yield app.register(cors_1.default, {
+        origin: "*",
+        methods: "GET, POST, PUT, DELETE, PATCH"
+    });
+}))();
 app.register(static_1.default, {
     root: path_1.default.join(process.cwd(), "uploads"),
 });
@@ -30,11 +36,6 @@ const router_2 = __importDefault(require("./modules/tariff/router"));
 const router_3 = __importDefault(require("./modules/package/router"));
 const router_4 = __importDefault(require("./modules/push/router"));
 const router_5 = __importDefault(require("./modules/counter/router"));
-app.register(cors_1.default, {
-    origin: "*",
-    methods: "GET POST PUT DELETE PUTCH",
-    credentials: true,
-});
 app.register(swagger_1.default);
 app.register(swagger_ui_1.default, swagger_2.swaggerOption);
 app.register(router_1.default);
