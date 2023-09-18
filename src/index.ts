@@ -10,17 +10,11 @@ const app: FastifyInstance = fastify({ logger: true });
 const port = process.env.PORT || 5050;
 const host = "RENDER" in process.env ? `0.0.0.0` : `localhost`;
 
-(async () => {
+!(async () => {
   await app.register(cors, {
-    origin: "http://127.0.0.1:5500",
-    allowedHeaders:[
-     "Origin",
-     "X-Requested-With",
-     "Accept",
-     "Content-Type",
-     "Authorization"
-    ],
-    methods: "GET, POST, PUT, DELETE, PATCH"
+    origin: true,
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    methods: ["GET, POST, PUT, DELETE, PATCH"]
   });
 })();
 

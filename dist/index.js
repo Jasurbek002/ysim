@@ -22,17 +22,11 @@ const cors_1 = __importDefault(require("@fastify/cors"));
 const app = (0, fastify_1.default)({ logger: true });
 const port = process.env.PORT || 5050;
 const host = "RENDER" in process.env ? `0.0.0.0` : `localhost`;
-(() => __awaiter(void 0, void 0, void 0, function* () {
+!(() => __awaiter(void 0, void 0, void 0, function* () {
     yield app.register(cors_1.default, {
-        origin: "http://127.0.0.1:5500",
-        allowedHeaders: [
-            "Origin",
-            "X-Requested-With",
-            "Accept",
-            "Content-Type",
-            "Authorization"
-        ],
-        methods: "GET, POST, PUT, DELETE, PATCH"
+        origin: true,
+        allowedHeaders: ['Content-Type', 'Authorization'],
+        methods: ["GET, POST, PUT, DELETE, PATCH"]
     });
 }))();
 app.register(static_1.default, {
