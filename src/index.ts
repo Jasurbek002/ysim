@@ -13,6 +13,13 @@ const host = "RENDER" in process.env ? `0.0.0.0` : `localhost`;
 (async () => {
   await app.register(cors, {
     origin: "*",
+    allowedHeaders:[
+     "Origin",
+     "X-Requested-With",
+     "Accept",
+     "Content-Type",
+     "Authorization"
+    ],
     methods: "GET, POST, PUT, DELETE, PATCH"
   });
 })();

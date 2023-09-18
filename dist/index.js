@@ -25,6 +25,13 @@ const host = "RENDER" in process.env ? `0.0.0.0` : `localhost`;
 (() => __awaiter(void 0, void 0, void 0, function* () {
     yield app.register(cors_1.default, {
         origin: "*",
+        allowedHeaders: [
+            "Origin",
+            "X-Requested-With",
+            "Accept",
+            "Content-Type",
+            "Authorization"
+        ],
         methods: "GET, POST, PUT, DELETE, PATCH"
     });
 }))();
