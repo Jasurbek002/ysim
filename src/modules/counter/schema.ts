@@ -1,10 +1,16 @@
 import { Type, Static } from "@sinclair/typebox";
 
 const CounterSchema = Type.Object({
-    category_id:Type.Number(),
-    device_id:Type.String(),
-    device_name:Type.String()
+  //   counter: Type.Array(),
 });
 type CounterData = Static<typeof CounterSchema>;
 
-export { CounterSchema, CounterData };
+interface Counter {
+  category_id: number;
+  device_id: string;
+  device_name: string;
+  package_id: number;
+  counter: number;
+}
+
+export { CounterSchema, CounterData, Counter };

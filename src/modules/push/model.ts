@@ -8,6 +8,7 @@ async function DEVICE_REG(device: any) {
 async function ADD_FCM_TOKEN(push: object) {
   try {
     const { data } = await apiNotfiy.post("/notification/create/push", push);
+ 
     return data;
   } catch (error) {
     throw error;

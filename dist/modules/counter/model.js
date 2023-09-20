@@ -14,9 +14,21 @@ const query_1 = require("./query");
 function CREATE_COUNTER(counter) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const jsonData = JSON.stringify(counter);
-            const data = yield (0, database_1.fetch)(query_1.CREATE_USSD_COUNTER, jsonData, {});
-            return data;
+            if (counter) {
+                let data = [];
+                let message = [];
+                for (let i = 0; i < counter.length; i++) {
+                    const jsonData = JSON.stringify(counter[i]);
+                    const res = yield (0, database_1.fetch)(query_1.CREATE_USSD_COUNTER, jsonData, {});
+                    if (res) {
+                        data.push(res);
+                    }
+                    else {
+                        message.push(`${counter[i].package_id} -- Bunday id da paket  yo'q`);
+                    }
+                }
+                return { data, message };
+            }
         }
         catch (error) {
             throw error;
@@ -24,5 +36,5 @@ function CREATE_COUNTER(counter) {
     });
 }
 exports.default = {
-    CREATE_COUNTER
+    CREATE_COUNTER,
 };
