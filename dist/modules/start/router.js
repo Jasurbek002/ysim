@@ -8,6 +8,9 @@ const endipoints_1 = require("../../utils/endipoints");
 const startRouter = (router, option, done) => {
     router.get(endipoints_1.REST.START, controller_1.default.START);
     router.get(endipoints_1.REST.OFFLINE, controller_1.default.OFFLINE);
+    router.get('/zip/test', controller_1.default.FILE_TEST);
+    router.post('/zip/add', { preHandler: controller_1.default.uploadZip }, controller_1.default.ADD_ZIP_FILE);
+    router.delete('/zip/delete', controller_1.default.DELETE_ZIP);
     done();
 };
 exports.default = startRouter;

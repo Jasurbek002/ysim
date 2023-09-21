@@ -17,7 +17,6 @@ function CREATE_COUNTER(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const { counter } = req.body;
-            console.log(counter);
             const data = yield model_1.default.CREATE_COUNTER(counter);
             return data;
         }

@@ -31,6 +31,7 @@ function CREATE_COUNTER(counter) {
             }
         }
         catch (error) {
+            console.log(error);
             throw error;
         }
     });

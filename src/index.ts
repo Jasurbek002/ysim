@@ -5,6 +5,13 @@ import fastifySwagger from "@fastify/swagger";
 import fastifySwaggerUi from "@fastify/swagger-ui";
 import { swaggerOption } from "./lib/swagger";
 import cors from "@fastify/cors";
+import { multer } from "./lib/multer";
+import startRouter from "./modules/start/router";
+import tariffRouter from "./modules/tariff/router";
+import packageRouter from "./modules/package/router";
+import pushRouter from "./modules/push/router";
+import couterRouter from "./modules/counter/router";
+
 
 const app: FastifyInstance = fastify({ logger: true });
 const port = process.env.PORT || 5050;
@@ -22,11 +29,8 @@ app.register(fastifyStatic, {
   root: path.join(process.cwd(), "uploads"),
 });
 
-import startRouter from "./modules/start/router";
-import tariffRouter from "./modules/tariff/router";
-import packageRouter from "./modules/package/router";
-import pushRouter from "./modules/push/router";
-import couterRouter from "./modules/counter/router";
+app.register(multer.contentParser)
+
 
 app.register(fastifySwagger);
 app.register(fastifySwaggerUi, swaggerOption);

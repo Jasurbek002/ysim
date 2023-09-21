@@ -1,4 +1,6 @@
+import { fetchAll } from "../../lib/database";
 import { apiRegister, apiNotfiy } from "../../lib/api";
+import { GET_ALL_ORDERS_QUERY } from "./query";
 
 async function DEVICE_REG(device: any) {
   const { data } = await apiRegister.post("/register/device", device);
@@ -8,7 +10,32 @@ async function DEVICE_REG(device: any) {
 async function ADD_FCM_TOKEN(push: object) {
   try {
     const { data } = await apiNotfiy.post("/notification/create/push", push);
- 
+    return data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function GET_ALL_ORDERS() {
+  try {
+    const data: any = await fetchAll(GET_ALL_ORDERS_QUERY);
+    return data[0].get_all_package_counter_month;
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function SEND_NOTIFY(device_id: string) {
+  try {
+    const option = {
+      title: "Ussd quick",
+      message:
+        "Xurmatli mijoz sizni xarid qilgan paketingiz ertaga o'chadi yangi paket sotib oling",
+    };
+    const { data } = await apiNotfiy.post(
+      `/notification/send/push/by/deviceId/${device_id}`,
+      option
+    );
     return data;
   } catch (error) {
     throw error;
@@ -18,4 +45,6 @@ async function ADD_FCM_TOKEN(push: object) {
 export default {
   DEVICE_REG,
   ADD_FCM_TOKEN,
+  GET_ALL_ORDERS,
+  SEND_NOTIFY,
 };

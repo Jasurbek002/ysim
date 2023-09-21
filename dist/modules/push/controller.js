@@ -13,6 +13,25 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const model_1 = __importDefault(require("./model"));
+const node_cron_1 = __importDefault(require("node-cron"));
+node_cron_1.default.schedule("0 0 * * *", () => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const orders = yield model_1.default.GET_ALL_ORDERS();
+        const currentDate = new Date();
+        orders.forEach((el) => __awaiter(void 0, void 0, void 0, function* () {
+            const paketPurchaseDate = new Date(el.order_date);
+            const daysSincePurchase = Math.floor((currentDate - paketPurchaseDate) / (1000 * 60 * 60 * 24));
+            console.log(daysSincePurchase);
+            if (daysSincePurchase >= 27) {
+                const data = yield model_1.default.SEND_NOTIFY("626b9558-d036-4552-b9db-053936280f62");
+                console.log(data);
+            }
+        }));
+    }
+    catch (error) {
+        console.log(error);
+    }
+}));
 function DEVICE_REG(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const { model, device_info, unique_id, device_type } = req.body;

@@ -9,7 +9,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const database_1 = require("../../lib/database");
 const api_1 = require("../../lib/api");
+const query_1 = require("./query");
 function DEVICE_REG(device) {
     return __awaiter(this, void 0, void 0, function* () {
         const { data } = yield api_1.apiRegister.post("/register/device", device);
@@ -27,7 +29,35 @@ function ADD_FCM_TOKEN(push) {
         }
     });
 }
+function GET_ALL_ORDERS() {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const data = yield (0, database_1.fetchAll)(query_1.GET_ALL_ORDERS_QUERY);
+            return data[0].get_all_package_counter_month;
+        }
+        catch (error) {
+            throw error;
+        }
+    });
+}
+function SEND_NOTIFY(device_id) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const option = {
+                title: "Ussd quick",
+                message: "Xurmatli mijoz sizni xarid qilgan paketingiz ertaga o'chadi yangi paket sotib oling",
+            };
+            const { data } = yield api_1.apiNotfiy.post(`/notification/send/push/by/deviceId/${device_id}`, option);
+            return data;
+        }
+        catch (error) {
+            throw error;
+        }
+    });
+}
 exports.default = {
     DEVICE_REG,
     ADD_FCM_TOKEN,
+    GET_ALL_ORDERS,
+    SEND_NOTIFY,
 };

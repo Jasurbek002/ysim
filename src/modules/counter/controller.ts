@@ -11,7 +11,6 @@ async function CREATE_COUNTER(
 ): Promise<object | any> {
   try {
     const {counter} = req.body as any;
-    console.log(counter)
     const data = await model.CREATE_COUNTER(counter);
     return data;
   } catch (error) {

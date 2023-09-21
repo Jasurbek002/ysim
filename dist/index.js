@@ -19,6 +19,12 @@ const swagger_1 = __importDefault(require("@fastify/swagger"));
 const swagger_ui_1 = __importDefault(require("@fastify/swagger-ui"));
 const swagger_2 = require("./lib/swagger");
 const cors_1 = __importDefault(require("@fastify/cors"));
+const multer_1 = require("./lib/multer");
+const router_1 = __importDefault(require("./modules/start/router"));
+const router_2 = __importDefault(require("./modules/tariff/router"));
+const router_3 = __importDefault(require("./modules/package/router"));
+const router_4 = __importDefault(require("./modules/push/router"));
+const router_5 = __importDefault(require("./modules/counter/router"));
 const app = (0, fastify_1.default)({ logger: true });
 const port = process.env.PORT || 5050;
 const host = "RENDER" in process.env ? `0.0.0.0` : `localhost`;
@@ -32,11 +38,7 @@ const host = "RENDER" in process.env ? `0.0.0.0` : `localhost`;
 app.register(static_1.default, {
     root: path_1.default.join(process.cwd(), "uploads"),
 });
-const router_1 = __importDefault(require("./modules/start/router"));
-const router_2 = __importDefault(require("./modules/tariff/router"));
-const router_3 = __importDefault(require("./modules/package/router"));
-const router_4 = __importDefault(require("./modules/push/router"));
-const router_5 = __importDefault(require("./modules/counter/router"));
+app.register(multer_1.multer.contentParser);
 app.register(swagger_1.default);
 app.register(swagger_ui_1.default, swagger_2.swaggerOption);
 app.register(router_1.default);

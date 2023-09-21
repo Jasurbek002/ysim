@@ -19,6 +19,7 @@ async function CREATE_COUNTER(counter: Counter[]): Promise<object | any> {
       return { data, message };
     }
   } catch (error) {
+    console.log(error)
     throw error;
   }
 }

@@ -15,6 +15,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const constants_1 = require("../../utils/constants");
 const path_1 = __importDefault(require("path"));
 const fs_1 = __importDefault(require("fs"));
+const multer_1 = __importDefault(require("../../lib/multer"));
+const uploadZip = multer_1.default.single("dist");
 function START() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -32,7 +34,7 @@ function START() {
 function OFFLINE(req, rep) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const ussd = path_1.default.join(process.cwd(), 'uploads', 'dist.zip');
+            const ussd = path_1.default.join(process.cwd(), "uploads", "dist.zip");
             const stats = fs_1.default.statSync(ussd);
             if (stats.size > 0) {
                 rep.sendFile(ussd);
@@ -40,7 +42,7 @@ function OFFLINE(req, rep) {
             else {
                 return {
                     status: 404,
-                    message: "file not found"
+                    message: "file not found",
                 };
             }
         }
@@ -49,4 +51,71 @@ function OFFLINE(req, rep) {
         }
     });
 }
-exports.default = { START, OFFLINE };
+function ADD_ZIP_FILE(req, rep) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            return {
+                status: 201,
+                message: "File succesfuliy upload",
+            };
+        }
+        catch (error) {
+            return error;
+        }
+    });
+}
+function FILE_TEST() {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const ussd = path_1.default.join(process.cwd(), "uploads", "dist.zip");
+            const stats = fs_1.default.statSync(ussd);
+            if (stats) {
+                return {
+                    isActive: true,
+                    file_size: stats.size,
+                    createdAt: stats.birthtime,
+                };
+            }
+            else {
+                return {
+                    isActive: false,
+                };
+            }
+        }
+        catch (error) {
+            return error;
+        }
+    });
+}
+function DELETE_ZIP() {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const ussd = path_1.default.join(process.cwd(), "uploads", "dist.zip");
+            const stats = fs_1.default.statSync(ussd);
+            if (stats) {
+                fs_1.default.unlinkSync(ussd);
+                return {
+                    status: 200,
+                    message: "file delete",
+                };
+            }
+            else {
+                return {
+                    status: 404,
+                    message: "file not found",
+                };
+            }
+        }
+        catch (error) {
+            return error;
+        }
+    });
+}
+exports.default = {
+    START,
+    OFFLINE,
+    uploadZip,
+    ADD_ZIP_FILE,
+    FILE_TEST,
+    DELETE_ZIP,
+};

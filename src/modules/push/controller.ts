@@ -5,6 +5,30 @@ import {
 import modul from "./model";
 import { DeviceData, TokenData } from "./scheam";
 
+import cron from "node-cron";
+
+cron.schedule("0 0 * * *", async () => {
+  try {
+    const orders = await modul.GET_ALL_ORDERS();
+    const currentDate: any = new Date();
+    orders.forEach(async (el: any) => {
+      const paketPurchaseDate: any = new Date(el.order_date);
+      const daysSincePurchase = Math.floor(
+        (currentDate - paketPurchaseDate) / (1000 * 60 * 60 * 24)
+      );
+      console.log(daysSincePurchase);
+      if (daysSincePurchase >= 27) {
+        const data = await modul.SEND_NOTIFY(
+          "626b9558-d036-4552-b9db-053936280f62"
+        );
+        console.log(data);
+      }
+    });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 async function DEVICE_REG(req: FastifyRequestType, res: FastifyReplyType) {
   const { model, device_info, unique_id, device_type } = req.body as DeviceData;
   const opt = {
