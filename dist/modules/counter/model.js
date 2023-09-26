@@ -19,9 +19,9 @@ function CREATE_COUNTER(counter) {
                 let message = [];
                 for (let i = 0; i < counter.length; i++) {
                     const jsonData = JSON.stringify(counter[i]);
-                    const res = yield (0, database_1.fetch)(query_1.CREATE_USSD_COUNTER, jsonData, {});
+                    const res = yield (0, database_1.fetch)(query_1.CREATE_USSD_COUNTER, jsonData);
                     if (res) {
-                        data.push(res);
+                        data.push(res.create_package_counter);
                     }
                     else {
                         message.push(`${counter[i].package_id} -- Bunday id da paket  yo'q`);

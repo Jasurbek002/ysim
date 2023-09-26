@@ -10,9 +10,9 @@ async function CREATE_COUNTER(
   res: FastifyReplyType
 ): Promise<object | any> {
   try {
-    const {counter} = req.body as any;
-    const data = await model.CREATE_COUNTER(counter);
-    return data;
+    const { counter } = req.body as any;
+    const { data } = await model.CREATE_COUNTER(counter);
+    if (data) return data;
   } catch (error) {
     return error;
   }
