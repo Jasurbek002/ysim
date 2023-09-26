@@ -1,6 +1,7 @@
-import { fetchAll } from "../../lib/database";
+import { fetch, fetchAll } from "../../lib/database";
 import { apiRegister, apiNotfiy } from "../../lib/api";
-import { GET_ALL_ORDERS_QUERY } from "./query";
+import { ENEBLE_PUSH, GET_ALL_ORDERS_QUERY } from "./query";
+import { PushData } from "./scheam";
 
 async function DEVICE_REG(device: any) {
   const { data } = await apiRegister.post("/register/device", device);
@@ -11,6 +12,17 @@ async function ADD_FCM_TOKEN(push: object) {
   try {
     const { data } = await apiNotfiy.post("/notification/create/push", push);
     return data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function PUSH_ENEBLE(push: PushData) {
+  try {
+    if (push) {
+      const data = await fetch(ENEBLE_PUSH, JSON.stringify(push), {});
+      return data;
+    }
   } catch (error) {
     throw error;
   }
@@ -47,4 +59,5 @@ export default {
   ADD_FCM_TOKEN,
   GET_ALL_ORDERS,
   SEND_NOTIFY,
+  PUSH_ENEBLE,
 };

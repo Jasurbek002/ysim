@@ -3,7 +3,7 @@ import {
   FastifyRequestType,
 } from "fastify/types/type-provider";
 import modul from "./model";
-import { DeviceData, TokenData } from "./scheam";
+import { DeviceData, PushData, TokenData } from "./scheam";
 
 import cron from "node-cron";
 
@@ -65,7 +65,20 @@ async function ADD_FCM_TOKEN(req: FastifyRequestType, res: FastifyReplyType) {
   }
 }
 
+async function ENEBLE_PUSH(req: FastifyRequestType, res: FastifyReplyType) {
+  try {
+    const {package_counter_id,device_id} = req.body as PushData
+    const data = await modul.PUSH_ENEBLE({
+      package_counter_id,device_id
+    })
+    return data
+  } catch (error) {
+    throw error
+  }
+}
+
 export default {
   DEVICE_REG,
   ADD_FCM_TOKEN,
+  ENEBLE_PUSH
 };

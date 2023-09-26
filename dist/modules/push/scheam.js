@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TokenSchema = exports.DeviceSchema = void 0;
+exports.PushSchema = exports.TokenSchema = exports.DeviceSchema = void 0;
 const typebox_1 = require("@sinclair/typebox");
 const DeviceSchema = typebox_1.Type.Object({
     model: typebox_1.Type.String(),
@@ -15,3 +15,8 @@ const TokenSchema = typebox_1.Type.Object({
     userId: typebox_1.Type.Number(),
 });
 exports.TokenSchema = TokenSchema;
+const PushSchema = typebox_1.Type.Object({
+    package_counter_id: typebox_1.Type.Number(),
+    device_id: typebox_1.Type.String(),
+});
+exports.PushSchema = PushSchema;

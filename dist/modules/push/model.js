@@ -29,6 +29,19 @@ function ADD_FCM_TOKEN(push) {
         }
     });
 }
+function PUSH_ENEBLE(push) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            if (push) {
+                const data = yield (0, database_1.fetch)(query_1.ENEBLE_PUSH, JSON.stringify(push), {});
+                return data;
+            }
+        }
+        catch (error) {
+            throw error;
+        }
+    });
+}
 function GET_ALL_ORDERS() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -60,4 +73,5 @@ exports.default = {
     ADD_FCM_TOKEN,
     GET_ALL_ORDERS,
     SEND_NOTIFY,
+    PUSH_ENEBLE,
 };

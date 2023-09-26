@@ -11,7 +11,6 @@ interface Counter {
   device_name: string;
   package_id: number;
   order_date: string;
-  have_notification: number;
 }
 
 export { CounterSchema, CounterData, Counter };

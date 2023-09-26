@@ -49,5 +49,7 @@ exports.REST = {
     // device register
     DEVICE_REG: "/device/register",
     // counter
-    CREATE_COUNTER: "/counter/add"
+    CREATE_COUNTER: "/counter/add",
+    ENEBLE_PUSH: "/eneble/push",
+    UPDATED_DISABLED: "/update/off"
 };

@@ -70,7 +70,22 @@ function ADD_FCM_TOKEN(req, res) {
         }
     });
 }
+function ENEBLE_PUSH(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const { package_counter_id, device_id } = req.body;
+            const data = yield model_1.default.PUSH_ENEBLE({
+                package_counter_id, device_id
+            });
+            return data;
+        }
+        catch (error) {
+            throw error;
+        }
+    });
+}
 exports.default = {
     DEVICE_REG,
     ADD_FCM_TOKEN,
+    ENEBLE_PUSH
 };

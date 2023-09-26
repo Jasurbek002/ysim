@@ -13,8 +13,20 @@ const TokenSchema = Type.Object({
   userId: Type.Number(),
 });
 
-type TokenData = Static<typeof TokenSchema>;
+const PushSchema = Type.Object({
+  package_counter_id: Type.Number(),
+  device_id: Type.String(),
+});
 
+type TokenData = Static<typeof TokenSchema>;
+type PushData = Static<typeof PushSchema>;
 type DeviceData = Static<typeof DeviceSchema>;
 
-export { DeviceSchema, DeviceData, TokenSchema, TokenData };
+export {
+  DeviceSchema,
+  DeviceData,
+  TokenSchema,
+  TokenData,
+  PushData,
+  PushSchema,
+};

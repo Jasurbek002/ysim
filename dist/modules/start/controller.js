@@ -16,6 +16,8 @@ const constants_1 = require("../../utils/constants");
 const path_1 = __importDefault(require("path"));
 const fs_1 = __importDefault(require("fs"));
 const multer_1 = __importDefault(require("../../lib/multer"));
+const database_1 = require("../../lib/database");
+const query_1 = require("./query");
 const uploadZip = multer_1.default.single("dist");
 function START() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -36,8 +38,9 @@ function OFFLINE(req, rep) {
         try {
             const ussd = path_1.default.join(process.cwd(), "uploads", "dist.zip");
             const stats = fs_1.default.statSync(ussd);
+            console.log(stats);
             if (stats.size > 0) {
-                rep.sendFile(ussd);
+                rep.download(ussd);
             }
             else {
                 return {
@@ -54,10 +57,13 @@ function OFFLINE(req, rep) {
 function ADD_ZIP_FILE(req, rep) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            return {
-                status: 201,
-                message: "File succesfuliy upload",
-            };
+            const data = yield (0, database_1.fetch)(query_1.UPDATED_ON);
+            if (data)
+                return {
+                    status: 201,
+                    message: "File succesfuliy upload",
+                    offline: data === null || data === void 0 ? void 0 : data.create_zip_offline_online_true,
+                };
         }
         catch (error) {
             return error;
@@ -81,6 +87,18 @@ function FILE_TEST() {
                     isActive: false,
                 };
             }
+        }
+        catch (error) {
+            return error;
+        }
+    });
+}
+function GET_STATUS() {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const data = yield (0, database_1.fetch)(query_1.GET_UPDATE_STATUS);
+            if (data)
+                return data === null || data === void 0 ? void 0 : data.get_zip_offline_online;
         }
         catch (error) {
             return error;
@@ -111,6 +129,18 @@ function DELETE_ZIP() {
         }
     });
 }
+function UPDATED_DISEBLED() {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const data = yield (0, database_1.fetch)(query_1.UPDATED_OFF);
+            if (data)
+                return data === null || data === void 0 ? void 0 : data.create_zip_offline_online_false;
+        }
+        catch (error) {
+            return error;
+        }
+    });
+}
 exports.default = {
     START,
     OFFLINE,
@@ -118,4 +148,6 @@ exports.default = {
     ADD_ZIP_FILE,
     FILE_TEST,
     DELETE_ZIP,
+    UPDATED_DISEBLED,
+    GET_STATUS,
 };
