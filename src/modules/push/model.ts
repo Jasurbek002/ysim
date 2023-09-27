@@ -45,12 +45,12 @@ async function SEND_NOTIFY(device_id: string) {
         "Xurmatli mijoz sizni xarid qilgan paketingiz ertaga o'chadi yangi paket sotib oling",
     };
     const { data } = await apiNotfiy.post(
-      `/notification/send/push/by/deviceId/${device_id}`,
+      `/notification/send/by/deviceId/${device_id}`,
       option
     );
     return data;
   } catch (error) {
-    throw error;
+   console.log(error)
   }
 }
 

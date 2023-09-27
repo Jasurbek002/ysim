@@ -21,7 +21,7 @@ function CREATE_COUNTER(counter) {
                     const jsonData = JSON.stringify(counter[i]);
                     const res = yield (0, database_1.fetch)(query_1.CREATE_USSD_COUNTER, jsonData);
                     if (res) {
-                        data.push(res.create_package_counter);
+                        data.push(res === null || res === void 0 ? void 0 : res.create_package_counter);
                     }
                     else {
                         message.push(`${counter[i].package_id} -- Bunday id da paket  yo'q`);

@@ -11,19 +11,20 @@ cron.schedule("0 0 * * *", async () => {
   try {
     const orders = await modul.GET_ALL_ORDERS();
     const currentDate: any = new Date();
-    orders.forEach(async (el: any) => {
+    let counter = 0;
+    for (const el of orders) {
       const paketPurchaseDate: any = new Date(el.order_date);
       const daysSincePurchase = Math.floor(
         (currentDate - paketPurchaseDate) / (1000 * 60 * 60 * 24)
       );
       console.log(daysSincePurchase);
-      if (daysSincePurchase >= 27) {
-        const data = await modul.SEND_NOTIFY(
-          "626b9558-d036-4552-b9db-053936280f62"
-        );
+      if (daysSincePurchase == 6) {
+        const data = await modul.SEND_NOTIFY(el.device_id);
         console.log(data);
+        counter += 1;
       }
-    });
+    }
+    console.log("count" + counter);
   } catch (error) {
     console.log(error);
   }
@@ -46,9 +47,9 @@ async function ADD_FCM_TOKEN(req: FastifyRequestType, res: FastifyReplyType) {
     const { fcmToken, deviceId, userId }: TokenData = req.body as TokenData;
 
     const opt = {
-      fcm_token: fcmToken,
-      device_id: deviceId,
-      user_id: userId,
+      fcmToken,
+      deviceId,
+      userId,
     };
 
     const data = await modul.ADD_FCM_TOKEN(opt);
@@ -67,18 +68,19 @@ async function ADD_FCM_TOKEN(req: FastifyRequestType, res: FastifyReplyType) {
 
 async function ENEBLE_PUSH(req: FastifyRequestType, res: FastifyReplyType) {
   try {
-    const {package_counter_id,device_id} = req.body as PushData
+    const { package_counter_id, device_id } = req.body as PushData;
     const data = await modul.PUSH_ENEBLE({
-      package_counter_id,device_id
-    })
-    return data
+      package_counter_id,
+      device_id,
+    });
+    return data;
   } catch (error) {
-    throw error
+    throw error;
   }
 }
 
 export default {
   DEVICE_REG,
   ADD_FCM_TOKEN,
-  ENEBLE_PUSH
+  ENEBLE_PUSH,
 };

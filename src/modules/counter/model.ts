@@ -11,7 +11,7 @@ async function CREATE_COUNTER(counter: Counter[]): Promise<object | any> {
         const jsonData = JSON.stringify(counter[i]);
         const res = await fetch(CREATE_USSD_COUNTER, jsonData);
         if (res) {
-          data.push(res.create_package_counter);
+          data.push(res?.create_package_counter);
         } else {
           message.push(`${counter[i].package_id} -- Bunday id da paket  yo'q`);
         }

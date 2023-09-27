@@ -18,15 +18,18 @@ node_cron_1.default.schedule("0 0 * * *", () => __awaiter(void 0, void 0, void 0
     try {
         const orders = yield model_1.default.GET_ALL_ORDERS();
         const currentDate = new Date();
-        orders.forEach((el) => __awaiter(void 0, void 0, void 0, function* () {
+        let counter = 0;
+        for (const el of orders) {
             const paketPurchaseDate = new Date(el.order_date);
             const daysSincePurchase = Math.floor((currentDate - paketPurchaseDate) / (1000 * 60 * 60 * 24));
             console.log(daysSincePurchase);
-            if (daysSincePurchase >= 27) {
-                const data = yield model_1.default.SEND_NOTIFY("626b9558-d036-4552-b9db-053936280f62");
+            if (daysSincePurchase == 6) {
+                const data = yield model_1.default.SEND_NOTIFY(el.device_id);
                 console.log(data);
+                counter += 1;
             }
-        }));
+        }
+        console.log("count" + counter);
     }
     catch (error) {
         console.log(error);
@@ -51,9 +54,9 @@ function ADD_FCM_TOKEN(req, res) {
         try {
             const { fcmToken, deviceId, userId } = req.body;
             const opt = {
-                fcm_token: fcmToken,
-                device_id: deviceId,
-                user_id: userId,
+                fcmToken,
+                deviceId,
+                userId,
             };
             const data = yield model_1.default.ADD_FCM_TOKEN(opt);
             if (data && data.success === true) {
@@ -75,7 +78,8 @@ function ENEBLE_PUSH(req, res) {
         try {
             const { package_counter_id, device_id } = req.body;
             const data = yield model_1.default.PUSH_ENEBLE({
-                package_counter_id, device_id
+                package_counter_id,
+                device_id,
             });
             return data;
         }
@@ -87,5 +91,5 @@ function ENEBLE_PUSH(req, res) {
 exports.default = {
     DEVICE_REG,
     ADD_FCM_TOKEN,
-    ENEBLE_PUSH
+    ENEBLE_PUSH,
 };
