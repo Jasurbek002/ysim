@@ -20,10 +20,9 @@ node_cron_1.default.schedule("0 0 * * *", () => __awaiter(void 0, void 0, void 0
         const currentDate = new Date();
         let counter = 0;
         for (const el of orders) {
-            const paketPurchaseDate = new Date(el.order_date);
-            const daysSincePurchase = Math.floor((currentDate - paketPurchaseDate) / (1000 * 60 * 60 * 24));
-            console.log(daysSincePurchase);
-            if (daysSincePurchase == 6) {
+            const paketOrderDate = new Date(el.order_date);
+            const daysSincePurchase = Math.floor((currentDate - paketOrderDate) / (1000 * 60 * 60 * 24));
+            if (daysSincePurchase <= 29) {
                 const data = yield model_1.default.SEND_NOTIFY(el.device_id);
                 console.log(data);
                 counter += 1;

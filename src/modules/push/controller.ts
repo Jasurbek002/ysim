@@ -13,12 +13,12 @@ cron.schedule("0 0 * * *", async () => {
     const currentDate: any = new Date();
     let counter = 0;
     for (const el of orders) {
-      const paketPurchaseDate: any = new Date(el.order_date);
+      const paketOrderDate: any = new Date(el.order_date);
       const daysSincePurchase = Math.floor(
-        (currentDate - paketPurchaseDate) / (1000 * 60 * 60 * 24)
+        (currentDate - paketOrderDate) / (1000 * 60 * 60 * 24)
       );
-      console.log(daysSincePurchase);
-      if (daysSincePurchase == 6) {
+   
+      if (daysSincePurchase <= 29) {
         const data = await modul.SEND_NOTIFY(el.device_id);
         console.log(data);
         counter += 1;
