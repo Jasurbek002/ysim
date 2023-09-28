@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const model_1 = __importDefault(require("./model"));
 const node_cron_1 = __importDefault(require("node-cron"));
-node_cron_1.default.schedule("* * * * *", () => __awaiter(void 0, void 0, void 0, function* () {
+node_cron_1.default.schedule("0 0 * * *", () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const orders = yield model_1.default.GET_ALL_ORDERS();
         const currentDate = new Date();

@@ -7,7 +7,7 @@ import { DeviceData, PushData, TokenData } from "./scheam";
 
 import cron from "node-cron";
 
-cron.schedule("* * * * *", async () => {
+cron.schedule("0 0 * * *", async () => {
   try {
     const orders = await modul.GET_ALL_ORDERS();
     const currentDate: any = new Date();
