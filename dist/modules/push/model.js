@@ -21,7 +21,7 @@ function DEVICE_REG(device) {
 function ADD_FCM_TOKEN(push) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const { data } = yield api_1.apiNotfiy.post("/push/save/token", push);
+            const { data } = yield api_1.apiNotfiy.post("/notification/save/token", push);
             return data;
         }
         catch (error) {
