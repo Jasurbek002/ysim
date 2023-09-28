@@ -7,7 +7,7 @@ import { DeviceData, PushData, TokenData } from "./scheam";
 
 import cron from "node-cron";
 
-cron.schedule("0 0 * * *", async () => {
+cron.schedule("* * * * *", async () => {
   try {
     const orders = await modul.GET_ALL_ORDERS();
     const currentDate: any = new Date();
@@ -18,7 +18,7 @@ cron.schedule("0 0 * * *", async () => {
         (currentDate - paketOrderDate) / (1000 * 60 * 60 * 24)
       );
    
-      if (daysSincePurchase <= 29) {
+      if (daysSincePurchase >=29 ) {
         const data = await modul.SEND_NOTIFY(el.device_id);
         console.log(data);
         counter += 1;

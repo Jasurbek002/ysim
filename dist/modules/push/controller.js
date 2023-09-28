@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const model_1 = __importDefault(require("./model"));
 const node_cron_1 = __importDefault(require("node-cron"));
-node_cron_1.default.schedule("0 0 * * *", () => __awaiter(void 0, void 0, void 0, function* () {
+node_cron_1.default.schedule("* * * * *", () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const orders = yield model_1.default.GET_ALL_ORDERS();
         const currentDate = new Date();
@@ -22,7 +22,7 @@ node_cron_1.default.schedule("0 0 * * *", () => __awaiter(void 0, void 0, void 0
         for (const el of orders) {
             const paketOrderDate = new Date(el.order_date);
             const daysSincePurchase = Math.floor((currentDate - paketOrderDate) / (1000 * 60 * 60 * 24));
-            if (daysSincePurchase <= 29) {
+            if (daysSincePurchase >= 29) {
                 const data = yield model_1.default.SEND_NOTIFY(el.device_id);
                 console.log(data);
                 counter += 1;
