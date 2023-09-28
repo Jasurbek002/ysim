@@ -22,8 +22,8 @@ node_cron_1.default.schedule("0 0 * * *", () => __awaiter(void 0, void 0, void 0
         for (const el of orders) {
             const paketOrderDate = new Date(el.order_date);
             const daysSincePurchase = Math.floor((currentDate - paketOrderDate) / (1000 * 60 * 60 * 24));
-            if (daysSincePurchase >= 29) {
-                const data = yield model_1.default.SEND_NOTIFY(el.device_id);
+            if (daysSincePurchase <= 29) {
+                const data = yield model_1.default.SEND_NOTIFY("f3f77c87-cd5f-4cd3-a948-6e10b7a7b581");
                 console.log(data);
                 counter += 1;
             }
