@@ -12,18 +12,21 @@ cron.schedule("0 0 * * *", async () => {
     const orders = await modul.GET_ALL_ORDERS();
     const currentDate: any = new Date();
     let counter = 0;
-    for (const el of orders) {
-      const paketOrderDate: any = new Date(el.order_date);
-      const daysSincePurchase = Math.floor(
-        (currentDate - paketOrderDate) / (1000 * 60 * 60 * 24)
-      );
-   
-      if (daysSincePurchase <=29 ) {
-        const data = await modul.SEND_NOTIFY("f3f77c87-cd5f-4cd3-a948-6e10b7a7b581");
-        console.log(data);
-        counter += 1;
+    if(orders.length !== 0){
+      for (const el of orders) {
+        const paketOrderDate: any = new Date(el.order_date);
+        const daysSincePurchase = Math.floor(
+          (currentDate - paketOrderDate) / (1000 * 60 * 60 * 24)
+        );
+     
+        if (daysSincePurchase >=29 && el.have_notification === 1 ) {
+          const data = await modul.SEND_NOTIFY(el.device_id);
+          console.log(data);
+          counter += 1;
+        }
       }
     }
+   
     console.log("count" + counter);
   } catch (error) {
     console.log(error);
