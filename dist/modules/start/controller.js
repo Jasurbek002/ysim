@@ -38,8 +38,6 @@ function OFFLINE(req, rep) {
         try {
             const ussd = path_1.default.join(process.cwd(), "uploads", "dist.zip");
             const stats = fs_1.default.statSync(ussd);
-            const stream = fs_1.default.createReadStream(ussd);
-            console.log(stream);
             console.log(stats);
             if (stats.size > 0) {
                 rep.download(stats);

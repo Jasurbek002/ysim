@@ -27,9 +27,7 @@ async function START() {
 async function OFFLINE(req: FastifyRequestType, rep: FastifyReply) {
   try {
     const ussd = path.join(process.cwd(), "uploads", "dist.zip");
-    const stats = fs.statSync(ussd);
-    const stream = fs.createReadStream(ussd)
-    console.log(stream)
+    const stats:any = fs.statSync(ussd);
     console.log(stats);
     if (stats.size > 0) {
       rep.download(stats);
