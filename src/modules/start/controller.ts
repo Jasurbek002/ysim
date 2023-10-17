@@ -6,6 +6,9 @@ import { FastifyReply } from "fastify/types/reply";
 import upload from "../../lib/multer";
 import { fetch } from "../../lib/database";
 import { GET_UPDATE_STATUS, UPDATED_OFF, UPDATED_ON } from "./query";
+import { apiRegister } from "../../lib/api";
+import { REST } from "../../utils/endipoints";
+import { FastifyRequest } from "fastify";
 
 const uploadZip = upload.single("dist");
 
@@ -25,9 +28,11 @@ async function OFFLINE(req: FastifyRequestType, rep: FastifyReply) {
   try {
     const ussd = path.join(process.cwd(), "uploads", "dist.zip");
     const stats = fs.statSync(ussd);
+    const stream = fs.createReadStream(ussd)
+    console.log(stream)
     console.log(stats);
     if (stats.size > 0) {
-      rep.download(ussd);
+      rep.download(stats);
     } else {
       return {
         status: 404,
@@ -41,13 +46,18 @@ async function OFFLINE(req: FastifyRequestType, rep: FastifyReply) {
 
 async function ADD_ZIP_FILE(req: any, rep: FastifyReply) {
   try {
-    const data = await fetch(UPDATED_ON);
-    if (data)
-      return {
-        status: 201,
-        message: "File succesfuliy upload",
-        offline: data?.create_zip_offline_online_true,
-      };
+
+      const {data} = await apiRegister.put(REST.DEVICE_UPDATE_ALL_ON);
+       if(data.success){
+        return {
+          status: 201,
+          message: "file upload end new updated",
+          isUpdated:data.data.updated,
+          last_update_file:data.data.dateTime
+        };
+       
+    
+  }
   } catch (error) {
     return error;
   }
@@ -73,10 +83,11 @@ async function FILE_TEST() {
   }
 }
 
-async function GET_STATUS() {
+async function GET_STATUS(req:FastifyRequest,rep:FastifyReply) {
   try {
-    const data = await fetch(GET_UPDATE_STATUS);
-    if (data) return data?.get_zip_offline_online;
+    const {deviceId} = req.params as any
+    const {data} = await apiRegister.post(`${REST.DEVICE_GET_ME}/${deviceId}`)
+    if (data) return data
   } catch (error) {
     return error;
   }
@@ -88,7 +99,6 @@ async function DELETE_ZIP() {
     const stats = fs.statSync(ussd);
     if (stats) {
       fs.unlinkSync(ussd);
-
       return {
         status: 200,
         message: "file delete",
@@ -104,14 +114,35 @@ async function DELETE_ZIP() {
   }
 }
 
-async function UPDATED_DISEBLED() {
+async function UPDATED_DISEBLED(req:FastifyRequest,rep:FastifyReply) {
   try {
-    const data = await fetch(UPDATED_OFF);
-    if(data) return data?.create_zip_offline_online_false;
+    const {deviceId}:any = req.params
+    const {data} = await apiRegister.put(`${REST.DEVICE_UPDATE_OFF}/${deviceId}`)
+    if (data) return data
   } catch (error) {
     return error;
   }
 }
+
+async function UPDATED_ENABLE(req:FastifyRequest,rep:FastifyReply) {
+  try {
+    const {deviceId}:any = req.params
+    const {data} = await apiRegister.put(`${REST.DEVICE_UPDATE_ON}/${deviceId}`)
+    if (data) return data
+  } catch (error) {
+    return error;
+  }
+}
+
+async function UPDATED_ENABLE_ALL(req:FastifyRequest,rep:FastifyReply) {
+  try {
+    const {data} = await apiRegister.put(REST.DEVICE_UPDATE_ALL_ON)
+    if (data) return data
+  } catch (error) {
+    return error;
+  }
+}
+
 
 export default {
   START,
@@ -122,4 +153,6 @@ export default {
   DELETE_ZIP,
   UPDATED_DISEBLED,
   GET_STATUS,
+  UPDATED_ENABLE,
+  UPDATED_ENABLE_ALL
 };

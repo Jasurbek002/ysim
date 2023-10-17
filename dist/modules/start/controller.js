@@ -16,8 +16,8 @@ const constants_1 = require("../../utils/constants");
 const path_1 = __importDefault(require("path"));
 const fs_1 = __importDefault(require("fs"));
 const multer_1 = __importDefault(require("../../lib/multer"));
-const database_1 = require("../../lib/database");
-const query_1 = require("./query");
+const api_1 = require("../../lib/api");
+const endipoints_1 = require("../../utils/endipoints");
 const uploadZip = multer_1.default.single("dist");
 function START() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -38,9 +38,11 @@ function OFFLINE(req, rep) {
         try {
             const ussd = path_1.default.join(process.cwd(), "uploads", "dist.zip");
             const stats = fs_1.default.statSync(ussd);
+            const stream = fs_1.default.createReadStream(ussd);
+            console.log(stream);
             console.log(stats);
             if (stats.size > 0) {
-                rep.download(ussd);
+                rep.download(stats);
             }
             else {
                 return {
@@ -57,13 +59,15 @@ function OFFLINE(req, rep) {
 function ADD_ZIP_FILE(req, rep) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const data = yield (0, database_1.fetch)(query_1.UPDATED_ON);
-            if (data)
+            const { data } = yield api_1.apiRegister.put(endipoints_1.REST.DEVICE_UPDATE_ALL_ON);
+            if (data.success) {
                 return {
                     status: 201,
-                    message: "File succesfuliy upload",
-                    offline: data === null || data === void 0 ? void 0 : data.create_zip_offline_online_true,
+                    message: "file upload end new updated",
+                    isUpdated: data.data.updated,
+                    last_update_file: data.data.dateTime
                 };
+            }
         }
         catch (error) {
             return error;
@@ -93,12 +97,13 @@ function FILE_TEST() {
         }
     });
 }
-function GET_STATUS() {
+function GET_STATUS(req, rep) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const data = yield (0, database_1.fetch)(query_1.GET_UPDATE_STATUS);
+            const { deviceId } = req.params;
+            const { data } = yield api_1.apiRegister.post(`${endipoints_1.REST.DEVICE_GET_ME}/${deviceId}`);
             if (data)
-                return data === null || data === void 0 ? void 0 : data.get_zip_offline_online;
+                return data;
         }
         catch (error) {
             return error;
@@ -129,12 +134,38 @@ function DELETE_ZIP() {
         }
     });
 }
-function UPDATED_DISEBLED() {
+function UPDATED_DISEBLED(req, rep) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const data = yield (0, database_1.fetch)(query_1.UPDATED_OFF);
+            const { deviceId } = req.params;
+            const { data } = yield api_1.apiRegister.put(`${endipoints_1.REST.DEVICE_UPDATE_OFF}/${deviceId}`);
             if (data)
-                return data === null || data === void 0 ? void 0 : data.create_zip_offline_online_false;
+                return data;
+        }
+        catch (error) {
+            return error;
+        }
+    });
+}
+function UPDATED_ENABLE(req, rep) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const { deviceId } = req.params;
+            const { data } = yield api_1.apiRegister.put(`${endipoints_1.REST.DEVICE_UPDATE_ON}/${deviceId}`);
+            if (data)
+                return data;
+        }
+        catch (error) {
+            return error;
+        }
+    });
+}
+function UPDATED_ENABLE_ALL(req, rep) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const { data } = yield api_1.apiRegister.put(endipoints_1.REST.DEVICE_UPDATE_ALL_ON);
+            if (data)
+                return data;
         }
         catch (error) {
             return error;
@@ -150,4 +181,6 @@ exports.default = {
     DELETE_ZIP,
     UPDATED_DISEBLED,
     GET_STATUS,
+    UPDATED_ENABLE,
+    UPDATED_ENABLE_ALL
 };

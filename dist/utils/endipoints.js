@@ -51,5 +51,10 @@ exports.REST = {
     // counter
     CREATE_COUNTER: "/counter/add",
     ENEBLE_PUSH: "/eneble/push",
-    UPDATED_DISABLED: "/update/off"
+    UPDATED_DISABLED: "/update/off/:deviceId",
+    // zip \
+    DEVICE_UPDATE_ON: "/device/set/updated",
+    DEVICE_UPDATE_OFF: "/device/set/not/updated",
+    DEVICE_UPDATE_ALL_ON: "/device/set/all/notUpdated",
+    DEVICE_GET_ME: "/device/is/updated"
 };
