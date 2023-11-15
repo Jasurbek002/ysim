@@ -12,7 +12,6 @@ import packageRouter from "./modules/package/router";
 import pushRouter from "./modules/push/router";
 import couterRouter from "./modules/counter/router";
 
-
 const app: FastifyInstance = fastify({ logger: true });
 const port = process.env.PORT || 5050;
 const host = "RENDER" in process.env ? `0.0.0.0` : `localhost`;
@@ -20,8 +19,8 @@ const host = "RENDER" in process.env ? `0.0.0.0` : `localhost`;
 !(async () => {
   await app.register(cors, {
     origin: true,
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    methods: ["GET, POST, PUT, DELETE, PATCH"]
+    allowedHeaders: ["Content-Type", "Authorization"],
+    methods: ["GET, POST, PUT, DELETE, PATCH"],
   });
 })();
 
@@ -29,8 +28,7 @@ app.register(fastifyStatic, {
   root: path.join(process.cwd(), "uploads"),
 });
 
-app.register(multer.contentParser)
-
+app.register(multer.contentParser);
 
 app.register(fastifySwagger);
 app.register(fastifySwaggerUi, swaggerOption);
@@ -45,7 +43,7 @@ app.listen(
   { host: host, port: Number(port) },
   async (err: any, address: any) => {
     if (err) {
-      app.log.error(err);
+      app.log.error(JSON.parse(err));
       process.exit(1);
     }
     console.log(`Server is running at ${address}`);

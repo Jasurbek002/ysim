@@ -11,7 +11,7 @@ import { REST } from "../../utils/endipoints";
 import { FastifyRequest } from "fastify";
 
 const uploadZip = upload.single("dist");
-
+const uploadTestZip = upload.single("test");
 async function START() {
   try {
     return {
@@ -27,7 +27,7 @@ async function START() {
 async function OFFLINE(req: FastifyRequestType, rep: FastifyReply) {
   try {
     const ussd = path.join(process.cwd(), "uploads", "dist.zip");
-    const stats:any = fs.statSync(ussd);
+    const stats: any = fs.statSync(ussd);
     console.log(stats);
     if (stats.size > 0) {
       rep.download(stats);
@@ -44,18 +44,31 @@ async function OFFLINE(req: FastifyRequestType, rep: FastifyReply) {
 
 async function ADD_ZIP_FILE(req: any, rep: FastifyReply) {
   try {
-
-      const {data} = await apiRegister.put(REST.DEVICE_UPDATE_ALL_ON);
-       if(data.success){
-        return {
-          status: 201,
-          message: "file upload end new updated",
-          isUpdated:data.data.updated,
-          last_update_file:data.data.dateTime
-        };
-       
-    
+    const { data } = await apiRegister.put(REST.DEVICE_UPDATE_ALL_ON);
+    if (data.success) {
+      return {
+        status: 201,
+        message: "file upload end new updated",
+        isUpdated: data.data.updated,
+        last_update_file: data.data.dateTime,
+      };
+    }
+  } catch (error) {
+    return error;
   }
+}
+
+async function ADD_ZIP_FILE_TEST(req: any, rep: FastifyReply) {
+  try {
+    const { data } = await apiRegister.put(REST.TEST_DEVICE_UPDATE_ALL_ON);
+    if (data.success) {
+      return {
+        status: 201,
+        message: "file upload end new updated",
+        isUpdated: data.data.updated,
+        last_update_file: data.data.dateTime,
+      };
+    }
   } catch (error) {
     return error;
   }
@@ -81,11 +94,25 @@ async function FILE_TEST() {
   }
 }
 
-async function GET_STATUS(req:FastifyRequest,rep:FastifyReply) {
+async function GET_STATUS(req: FastifyRequest, rep: FastifyReply) {
   try {
-    const {deviceId} = req.params as any
-    const {data} = await apiRegister.post(`${REST.DEVICE_GET_ME}/${deviceId}`)
-    if (data) return data
+    const { deviceId } = req.params as any;
+    const { data } = await apiRegister.post(
+      `${REST.DEVICE_GET_ME}/${deviceId}`
+    );
+    if (data) return data;
+  } catch (error) {
+    return error;
+  }
+}
+
+async function TEST_GET_STATUS(req: FastifyRequest, rep: FastifyReply) {
+  try {
+    const { deviceId } = req.params as any;
+    const { data } = await apiRegister.get(
+      `${REST.TEST_DEVICE_GET_ME}/${deviceId}`
+    );
+    if (data) return data;
   } catch (error) {
     return error;
   }
@@ -112,45 +139,87 @@ async function DELETE_ZIP() {
   }
 }
 
-async function UPDATED_DISEBLED(req:FastifyRequest,rep:FastifyReply) {
+async function UPDATED_DISEBLED(req: FastifyRequest, rep: FastifyReply) {
   try {
-    const {deviceId}:any = req.params
-    const {data} = await apiRegister.put(`${REST.DEVICE_UPDATE_OFF}/${deviceId}`)
-    if (data) return data
+    const { deviceId }: any = req.params;
+    const { data } = await apiRegister.put(
+      `${REST.DEVICE_UPDATE_OFF}/${deviceId}`
+    );
+    if (data) return data;
   } catch (error) {
     return error;
   }
 }
 
-async function UPDATED_ENABLE(req:FastifyRequest,rep:FastifyReply) {
+async function TEST_UPDATED_DISEBLED(req: FastifyRequest, rep: FastifyReply) {
   try {
-    const {deviceId}:any = req.params
-    const {data} = await apiRegister.put(`${REST.DEVICE_UPDATE_ON}/${deviceId}`)
-    if (data) return data
+    const { deviceId }: any = req.params;
+    const { data } = await apiRegister.put(
+      `${REST.TEST_DEVICE_UPDATE_OFF}/${deviceId}`
+    );
+    if (data) return data;
   } catch (error) {
     return error;
   }
 }
 
-async function UPDATED_ENABLE_ALL(req:FastifyRequest,rep:FastifyReply) {
+async function UPDATED_ENABLE(req: FastifyRequest, rep: FastifyReply) {
   try {
-    const {data} = await apiRegister.put(REST.DEVICE_UPDATE_ALL_ON)
-    if (data) return data
+    const { deviceId }: any = req.params;
+    const { data } = await apiRegister.put(
+      `${REST.DEVICE_UPDATE_ON}/${deviceId}`
+    );
+    if (data) return data;
   } catch (error) {
     return error;
   }
 }
 
+async function TEST_UPDATED_ENABLE(req: FastifyRequest, rep: FastifyReply) {
+  try {
+    const { deviceId }: any = req.params;
+    const { data } = await apiRegister.put(
+      `${REST.TEST_DEVICE_UPDATE_ON}/${deviceId}`
+    );
+    if (data) return data;
+  } catch (error) {
+    return error;
+  }
+}
+
+async function UPDATED_ENABLE_ALL(req: FastifyRequest, rep: FastifyReply) {
+  try {
+    const { data } = await apiRegister.put(REST.DEVICE_UPDATE_ALL_ON);
+    if (data) return data;
+  } catch (error) {
+    return error;
+  }
+}
+
+async function TEST_UPDATED_ENABLE_ALL(req: FastifyRequest, rep: FastifyReply) {
+  try {
+    const { data } = await apiRegister.put(REST.TEST_DEVICE_UPDATE_ALL_ON);
+    if (data) return data;
+  } catch (error) {
+    return error;
+  }
+}
 
 export default {
   START,
   OFFLINE,
   uploadZip,
+  uploadTestZip,
   ADD_ZIP_FILE,
   FILE_TEST,
   DELETE_ZIP,
   UPDATED_DISEBLED,
   GET_STATUS,
   UPDATED_ENABLE,
-  UPDATED_ENABLE_ALL
+  UPDATED_ENABLE_ALL,
+  TEST_GET_STATUS,
+  ADD_ZIP_FILE_TEST,
+  TEST_UPDATED_DISEBLED,
+  TEST_UPDATED_ENABLE,
+  TEST_UPDATED_ENABLE_ALL,
 };

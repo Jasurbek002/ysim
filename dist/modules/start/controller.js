@@ -19,6 +19,7 @@ const multer_1 = __importDefault(require("../../lib/multer"));
 const api_1 = require("../../lib/api");
 const endipoints_1 = require("../../utils/endipoints");
 const uploadZip = multer_1.default.single("dist");
+const uploadTestZip = multer_1.default.single("test");
 function START() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -63,7 +64,25 @@ function ADD_ZIP_FILE(req, rep) {
                     status: 201,
                     message: "file upload end new updated",
                     isUpdated: data.data.updated,
-                    last_update_file: data.data.dateTime
+                    last_update_file: data.data.dateTime,
+                };
+            }
+        }
+        catch (error) {
+            return error;
+        }
+    });
+}
+function ADD_ZIP_FILE_TEST(req, rep) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const { data } = yield api_1.apiRegister.put(endipoints_1.REST.TEST_DEVICE_UPDATE_ALL_ON);
+            if (data.success) {
+                return {
+                    status: 201,
+                    message: "file upload end new updated",
+                    isUpdated: data.data.updated,
+                    last_update_file: data.data.dateTime,
                 };
             }
         }
@@ -100,6 +119,19 @@ function GET_STATUS(req, rep) {
         try {
             const { deviceId } = req.params;
             const { data } = yield api_1.apiRegister.post(`${endipoints_1.REST.DEVICE_GET_ME}/${deviceId}`);
+            if (data)
+                return data;
+        }
+        catch (error) {
+            return error;
+        }
+    });
+}
+function TEST_GET_STATUS(req, rep) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const { deviceId } = req.params;
+            const { data } = yield api_1.apiRegister.get(`${endipoints_1.REST.TEST_DEVICE_GET_ME}/${deviceId}`);
             if (data)
                 return data;
         }
@@ -145,11 +177,37 @@ function UPDATED_DISEBLED(req, rep) {
         }
     });
 }
+function TEST_UPDATED_DISEBLED(req, rep) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const { deviceId } = req.params;
+            const { data } = yield api_1.apiRegister.put(`${endipoints_1.REST.TEST_DEVICE_UPDATE_OFF}/${deviceId}`);
+            if (data)
+                return data;
+        }
+        catch (error) {
+            return error;
+        }
+    });
+}
 function UPDATED_ENABLE(req, rep) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const { deviceId } = req.params;
             const { data } = yield api_1.apiRegister.put(`${endipoints_1.REST.DEVICE_UPDATE_ON}/${deviceId}`);
+            if (data)
+                return data;
+        }
+        catch (error) {
+            return error;
+        }
+    });
+}
+function TEST_UPDATED_ENABLE(req, rep) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const { deviceId } = req.params;
+            const { data } = yield api_1.apiRegister.put(`${endipoints_1.REST.TEST_DEVICE_UPDATE_ON}/${deviceId}`);
             if (data)
                 return data;
         }
@@ -170,15 +228,33 @@ function UPDATED_ENABLE_ALL(req, rep) {
         }
     });
 }
+function TEST_UPDATED_ENABLE_ALL(req, rep) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const { data } = yield api_1.apiRegister.put(endipoints_1.REST.TEST_DEVICE_UPDATE_ALL_ON);
+            if (data)
+                return data;
+        }
+        catch (error) {
+            return error;
+        }
+    });
+}
 exports.default = {
     START,
     OFFLINE,
     uploadZip,
+    uploadTestZip,
     ADD_ZIP_FILE,
     FILE_TEST,
     DELETE_ZIP,
     UPDATED_DISEBLED,
     GET_STATUS,
     UPDATED_ENABLE,
-    UPDATED_ENABLE_ALL
+    UPDATED_ENABLE_ALL,
+    TEST_GET_STATUS,
+    ADD_ZIP_FILE_TEST,
+    TEST_UPDATED_DISEBLED,
+    TEST_UPDATED_ENABLE,
+    TEST_UPDATED_ENABLE_ALL,
 };

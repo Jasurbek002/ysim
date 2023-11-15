@@ -31,8 +31,8 @@ const host = "RENDER" in process.env ? `0.0.0.0` : `localhost`;
 !(() => __awaiter(void 0, void 0, void 0, function* () {
     yield app.register(cors_1.default, {
         origin: true,
-        allowedHeaders: ['Content-Type', 'Authorization'],
-        methods: ["GET, POST, PUT, DELETE, PATCH"]
+        allowedHeaders: ["Content-Type", "Authorization"],
+        methods: ["GET, POST, PUT, DELETE, PATCH"],
     });
 }))();
 app.register(static_1.default, {
@@ -48,7 +48,7 @@ app.register(router_4.default, { prefix: "/v1" });
 app.register(router_5.default, { prefix: "/v1" });
 app.listen({ host: host, port: Number(port) }, (err, address) => __awaiter(void 0, void 0, void 0, function* () {
     if (err) {
-        app.log.error(err);
+        app.log.error(JSON.parse(err));
         process.exit(1);
     }
     console.log(`Server is running at ${address}`);
