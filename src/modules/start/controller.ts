@@ -122,6 +122,28 @@ async function DELETE_ZIP() {
   try {
     const ussd = path.join(process.cwd(), "uploads", "dist.zip");
     const stats = fs.statSync(ussd);
+    console.log(stats);
+    if (stats) {
+      fs.unlinkSync(ussd);
+      return {
+        status: 200,
+        message: "file delete",
+      };
+    } else {
+      return {
+        status: 404,
+        message: "file not found",
+      };
+    }
+  } catch (error) {
+    return error;
+  }
+}
+
+async function TEST_DELETE_ZIP() {
+  try {
+    const ussd = path.join(process.cwd(), "uploads", "test.zip");
+    const stats = fs.statSync(ussd);
     if (stats) {
       fs.unlinkSync(ussd);
       return {
@@ -222,4 +244,5 @@ export default {
   TEST_UPDATED_DISEBLED,
   TEST_UPDATED_ENABLE,
   TEST_UPDATED_ENABLE_ALL,
+  TEST_DELETE_ZIP,
 };

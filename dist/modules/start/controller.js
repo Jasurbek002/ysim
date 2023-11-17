@@ -145,6 +145,31 @@ function DELETE_ZIP() {
         try {
             const ussd = path_1.default.join(process.cwd(), "uploads", "dist.zip");
             const stats = fs_1.default.statSync(ussd);
+            console.log(stats);
+            if (stats) {
+                fs_1.default.unlinkSync(ussd);
+                return {
+                    status: 200,
+                    message: "file delete",
+                };
+            }
+            else {
+                return {
+                    status: 404,
+                    message: "file not found",
+                };
+            }
+        }
+        catch (error) {
+            return error;
+        }
+    });
+}
+function TEST_DELETE_ZIP() {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const ussd = path_1.default.join(process.cwd(), "uploads", "test.zip");
+            const stats = fs_1.default.statSync(ussd);
             if (stats) {
                 fs_1.default.unlinkSync(ussd);
                 return {
@@ -257,4 +282,5 @@ exports.default = {
     TEST_UPDATED_DISEBLED,
     TEST_UPDATED_ENABLE,
     TEST_UPDATED_ENABLE_ALL,
+    TEST_DELETE_ZIP,
 };

@@ -15,6 +15,7 @@ const startRouter = (router, option, done) => {
     router.get("/zip/test", controller_1.default.FILE_TEST);
     router.post("/zip/add", { preHandler: controller_1.default.uploadZip }, controller_1.default.ADD_ZIP_FILE);
     router.delete("/zip/delete", controller_1.default.DELETE_ZIP);
+    router.delete("/test/zip/delete", controller_1.default.TEST_DELETE_ZIP);
     router.put(`/test/${endipoints_1.REST.UPDATED_DISABLED}`, controller_1.default.UPDATED_DISEBLED);
     router.get("/test/update/status/:deviceId", controller_1.default.TEST_GET_STATUS);
     router.put('/test/update/on/:deviceId', controller_1.default.TEST_UPDATED_ENABLE);

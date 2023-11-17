@@ -16,6 +16,7 @@ const startRouter = (router: FastifyInstance, option: any, done: any) => {
     controller.ADD_ZIP_FILE
   );
   router.delete("/zip/delete", controller.DELETE_ZIP);
+  router.delete("/test/zip/delete", controller.TEST_DELETE_ZIP);
   router.put(`/test/${REST.UPDATED_DISABLED}`, controller.UPDATED_DISEBLED);
   router.get("/test/update/status/:deviceId", controller.TEST_GET_STATUS);
   router.put('/test/update/on/:deviceId',controller.TEST_UPDATED_ENABLE)
