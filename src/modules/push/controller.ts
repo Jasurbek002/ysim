@@ -17,7 +17,7 @@ cron.schedule("0 0 * * *", async () => {
         const paketOrderDate: any = new Date(el.order_date);
         const daysSincePurchase = Math.floor(
           (currentDate - paketOrderDate) / (1000 * 60 * 60 * 24)
-        );
+        ); 
      
         if (daysSincePurchase >=29 && el.have_notification === 1 ) {
           const data = await modul.SEND_NOTIFY(el.device_id);

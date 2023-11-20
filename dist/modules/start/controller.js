@@ -216,12 +216,15 @@ function TEST_UPDATED_DISEBLED(req, rep) {
     });
 }
 function UPDATED_ENABLE(req, rep) {
+    var _a;
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const { deviceId } = req.params;
             const { data } = yield api_1.apiRegister.put(`${endipoints_1.REST.DEVICE_UPDATE_ON}/${deviceId}`);
-            if (data)
+            if (data) {
+                (_a = data === null || data === void 0 ? void 0 : data.data) === null || _a === void 0 ? true : delete _a.message;
                 return data;
+            }
         }
         catch (error) {
             return error;
@@ -242,11 +245,14 @@ function TEST_UPDATED_ENABLE(req, rep) {
     });
 }
 function UPDATED_ENABLE_ALL(req, rep) {
+    var _a;
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const { data } = yield api_1.apiRegister.put(endipoints_1.REST.DEVICE_UPDATE_ALL_ON);
-            if (data)
+            if (data) {
+                (_a = data === null || data === void 0 ? void 0 : data.data) === null || _a === void 0 ? true : delete _a.message;
                 return data;
+            }
         }
         catch (error) {
             return error;

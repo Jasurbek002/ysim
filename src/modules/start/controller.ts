@@ -191,7 +191,10 @@ async function UPDATED_ENABLE(req: FastifyRequest, rep: FastifyReply) {
     const { data } = await apiRegister.put(
       `${REST.DEVICE_UPDATE_ON}/${deviceId}`
     );
-    if (data) return data;
+    if (data) {
+      delete data?.data?.message;
+      return data;
+    }
   } catch (error) {
     return error;
   }
@@ -212,7 +215,10 @@ async function TEST_UPDATED_ENABLE(req: FastifyRequest, rep: FastifyReply) {
 async function UPDATED_ENABLE_ALL(req: FastifyRequest, rep: FastifyReply) {
   try {
     const { data } = await apiRegister.put(REST.DEVICE_UPDATE_ALL_ON);
-    if (data) return data;
+    if (data) {
+      delete data?.data?.message;
+      return data;
+    }
   } catch (error) {
     return error;
   }
